@@ -1,0 +1,13 @@
+#!/usr/bin/env perl
+
+use Mojo::Base -base, -signatures;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use CPAN::Groonga;
+use CPAN::Groonga::Bin::LoadRecent;
+use Mojo::Util qw/getopt/;
+
+getopt \my %opts, CPAN::Groonga->options;
+
+CPAN::Groonga->instance(%opts);
+CPAN::Groonga::Bin::LoadRecent->new->run(@ARGV);

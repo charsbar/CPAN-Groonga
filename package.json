@@ -1,0 +1,11 @@
+{
+  "name": "cpan-groonga",
+  "version": "0.0.1",
+  "description": "Yet Another CPAN Grepe",
+  "author": "Kenichi Ishigaki",
+  "license": "Artistic-1.0-Perl",
+  "repository": "https://github.com/charsbar/CPAN-Groonga",
+  "dependencies": {
+    "spectre.css": "^0.5.6"
+  }
+}

@@ -1,0 +1,24 @@
+CPAN-Groonga
+============
+
+SETUP
+-----
+
+1. Install Groonga from http://groonga.org
+2. Create an empty Groonga database (ie. groonga --protocol http -s -n db/cpan.db)
+3. Create a CPAN mirror (with CPAN::Mini, or rsync from one of the mirrors)
+4. Clone https://github.com/charsbar/CPAN-Groonga
+5. Install dependencies (ie. cpanm --installdeps .)
+6. Run "perl bin/setup"
+7. Run "perl bin/load_cpan --cpan_dir path/to/cpan" to load data
+8. Run "plackup grep.psgi"
+9. Register bin/load_recent to your crontab.
+
+COPYRIGHT AND LICENSE
+---------------------
+
+Copyright (C) 2018 Kenichi Ishigaki
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
+

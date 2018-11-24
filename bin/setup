@@ -1,0 +1,11 @@
+use Mojo::Base -strict;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use Mojo::Util qw/getopt/;
+use CPAN::Groonga;
+use CPAN::Groonga::Schema;
+
+getopt \my %opts, CPAN::Groonga->options;
+
+CPAN::Groonga->instance(%opts);
+CPAN::Groonga::Schema->new->setup;
