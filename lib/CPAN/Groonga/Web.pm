@@ -21,7 +21,7 @@ get '/search' => sub ($c) {
     my $query = $c->req->param('q');
     return unless defined $query;
 
-    $query =~ s/([:\-*+\\~<>()])/\\$1/g;
+    $query =~ s/([:\-*+~<>()])/\\$1/g;
     $params{query} = $query;
     $params{match_columns} = 'tags * 1000 || scorer_tf_idf(body) * 5';
 
