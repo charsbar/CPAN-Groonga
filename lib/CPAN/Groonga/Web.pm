@@ -181,6 +181,10 @@ span.keyword { font-weight: bold; color: #f00 }
           <dd>Put words in double quotes.
             <code>"push @INC"</code>
           </dd>
+          <dt>Escape</dt>
+          <dd>Put a backslash before a special character (notably, backslash and double quote).
+            <code>\"</code>
+          </dd>
         </dl>
       </div>
     </div>
