@@ -35,7 +35,7 @@ sub extract_and_register_distribution ($self, $archive_file) {
         $basedir = $tmpdir unless -d $basedir;
         $self->register_distribution($basedir, $archive_file);
     } catch {
-        $self->log(error => "Can't extract ".$archive_file->path);
+        $self->log(error => "Can't extract ".$archive_file->path." $@");
     }
     $tmpdir->remove;
 }
