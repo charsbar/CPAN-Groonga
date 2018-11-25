@@ -128,7 +128,7 @@ span.keyword { font-weight: bold; color: #f00 }
 </header>
 <div class="container">
   <div class="columns">
-    <div class="column col-8">
+    <div class="column col-10">
 %= form_for search => begin
       <div class="input-group">
         <%= text_field 'q', class => "form-input" %>
@@ -165,29 +165,6 @@ span.keyword { font-weight: bold; color: #f00 }
 %== content
 
     </div>
-    <div class="column col-4">
-      <div>
-        <h5>Usage</h5>
-        <dl>
-          <dt>AND condition</dt>
-          <dd>Just enter words in the search box.
-            <code>open FH</code>
-          </dd>
-          <dt>OR condition</dt>
-          <dd>Put OR (uppercase only) between words.
-            <code>->@* OR ->%*</code>
-          </dd>
-          <dt>Exact phrase</dt>
-          <dd>Put words in double quotes.
-            <code>"push @INC"</code>
-          </dd>
-          <dt>Escape</dt>
-          <dd>Put a backslash before a special character (notably, backslash and double quote).
-            <code>\"</code>
-          </dd>
-        </dl>
-      </div>
-    </div>
   </div>
 </div>
 <div class="container">
@@ -199,6 +176,31 @@ span.keyword { font-weight: bold; color: #f00 }
 
 @@ index.html.ep
 % layout 'default';
+<div class="empty">
+  <p class="empty-title h5">Usage</p>
+  <dl>
+    <dt>AND condition</dt>
+    <dd>
+      Just enter words in the search box.
+      <code>open FH</code>
+    </dd>
+    <dt>OR condition</dt>
+    <dd>
+      Put OR (uppercase only) between words.
+      <code>->@* OR ->%*</code>
+    </dd>
+    <dt>Exact phrase</dt>
+    <dd>
+      Put words in double quotes.
+      <code>"push @INC"</code>
+    </dd>
+    <dt>Escape</dt>
+    <dd>
+      Put a backslash before a special character (notably, backslash and double quote).
+      <code>\"</code>
+    </dd>
+  </dl>
+</div>
 
 @@ search.html.ep
 % layout 'default';
