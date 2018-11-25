@@ -123,7 +123,7 @@ span.keyword { font-weight: bold; color: #f00 }
 <body>
 <header class="navbar">
   <section class="navbar-section">
-    <h1><a class="navbar-brand m-2" href="#">CPAN::Groonga</a></h1>
+    <h1><a class="navbar-brand m-2" href="/">CPAN::Groonga</a></h1>
   </section>
 </header>
 <div class="container">
