@@ -153,6 +153,9 @@ span.keyword { font-weight: bold; color: #f00 }
           <div class="form-group">
           <div>Extension</div>
           % for my $ext (qw/pm pod pl t xs h pm6 pod6 pl6/) {
+            % if ($ext eq 'pm6') {
+              <br>
+            % }
           <label class="form-checkbox form-inline">
             <%= check_box extension => $ext %><i class="form-icon"></i> <%= $ext %>
           </label>
