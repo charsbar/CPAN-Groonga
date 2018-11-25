@@ -170,6 +170,7 @@ span.keyword { font-weight: bold; color: #f00 }
     </div>
   </div>
 </div>
+<hr>
 <div class="container">
   <p>Powered by <a href="http://groonga.org">Groonga</a></p>
   <p>Maintained by Kenichi Ishigaki &lt;ishigaki@cpan.org&gt;. If you find anything, submit it on <a href="https://github.com/charsbar/CPAN-Groonga/issues">GitHub</a>.</p>
