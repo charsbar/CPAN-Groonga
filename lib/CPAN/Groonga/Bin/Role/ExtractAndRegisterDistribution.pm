@@ -86,7 +86,7 @@ sub register_distribution ($self, $dir, $archive_file) {
     $dir->recurse(callback => sub {
         my $file = shift;
         return unless -f $file && -r $file;
-        my ($extension) = $file =~ /\.((?:pm|pod|pl|t)6?|xs|h)?$/;
+        my ($extension) = $file =~ /\.((?:pm|pod|pl|t)6?|p6|xs|h)?$/;
         my $file_path = $file->relative($dir);
         return if $file_path =~ /^(inc|examples?|author|demo|eg|local|bundled?)\b/;
         my $is_test = $file_path =~ m!^x?t/!;
