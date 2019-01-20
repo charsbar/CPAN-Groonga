@@ -12,17 +12,19 @@ sub read_file ($self, $file) {
 }
 
 sub read_string ($self, $string) {
-    my $block_name;
+    my ($block_name, $text);
     for my $piece (@{ $self->parse_string($string) // [] }) {
         if ($piece->{is_pod}) {
             $self->pod( $self->pod . $piece->{orig_txt} );
 
             if ($piece->{cmd_type} and $piece->{cmd_type} eq 'head') {
-                ($block_name) = $piece->{orig_txt} =~ /^\A=head1\s+(NAME|SYNOPSIS|DESCRIPTION)\s*\n/s;
-                next;
+                $block_name = '';
+                $text = $piece->{orig_txt};
+                if ($text =~ s/^\A=head1\s+(NAME|SYNOPSIS|DESCRIPTION)\s*?[\015\012]+//sm) {
+                    $block_name = $1;
+                }
             }
             next unless $block_name;
-            my $text = $piece->{paragraph} // '';
             $text =~ s/\s+$//s;
             if ($block_name eq 'NAME') {
                 my ($package, $abstract) = split /\s+\-\s+/, $text;
