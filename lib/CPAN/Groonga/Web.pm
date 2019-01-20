@@ -55,7 +55,7 @@ get '/search' => sub ($c) {
         push @filters, 'extension != ""';
     }
 
-    push @filters, "is_test == " . ($include_tests) ? "true" : "false";
+    push @filters, "is_test == " . (($include_tests) ? "true" : "false");
     # TODO: regexp tag filter?
 
     $params{filter} = join ' && ', map {"($_)"} @filters;
