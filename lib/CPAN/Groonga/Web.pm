@@ -61,7 +61,7 @@ get '/search' => sub ($c) {
     $params{filter} = join ' && ', map {"($_)"} @filters;
 
     $params{sort_keys} = '-_score';
-    $params{output_columns} = '_score, _key, abstract, snippet_html(body), author, distribution, time_format(distribution.released, "%Y")';
+    $params{output_columns} = '_score, _key, abstract, snippet_html(body), author, distribution, time_format(distribution.released, "%Y"), distribution.is_perl6, distribution.cpan_path';
 
     # decrease score for older distributions
     $params{scorer} = '_score = _score + (distribution.released - now()) / 1000000000000';
@@ -228,7 +228,7 @@ span.keyword { font-weight: bold; color: #f00 }
 %     } else {
 %   # file
     <div class="tile-title">
-      <a href="<%= url_with->query({distribution => $row->{distribution}, group_by => 'distribution'}) %>"><%= $row->{distribution} %></a> <small>(<%= $row->{author} %>, <%= $row->{time_format} %>)</small>
+      <a href="<%= url_with->query({distribution => $row->{distribution}, group_by => 'distribution'}) %>"><%= $row->{distribution} %></a> <small>(<%= $row->{"distribution.cpan_path"} %>, <%= $row->{author} %>, <%= $row->{time_format} %>)</small>
       <div><small><%= $row->{_key} %> (<a href="<%= url_with->path("/source/$row->{_key}") %>">view source</a>)</small></div>
     </div>
 %       my @snippets = @{ $row->{snippet_html} // [] };
