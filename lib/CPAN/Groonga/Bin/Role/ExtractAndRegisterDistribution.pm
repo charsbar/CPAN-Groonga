@@ -97,7 +97,7 @@ sub register_distribution ($self, $dir, $archive_file) {
         if ($size < 1_000_000) {
             $body = $file->slurp;
             $body = '' if is_binary($body);
-            if ($body && $extension && $extension =~ /^(?:pm|pod|pl|t)$/) {
+            if (!$is_perl6 and $body and $extension and $extension =~ /^(?:pm|pod|pl|t)$/) {
                 my ($encoding) = $body =~ /^=encoding\s+(\S+)$/m;
                 if ($encoding and $encoding !~ /utf\-?8/i) {
                     $self->log(info => "converted $name/$file_path from $encoding to utf8");
