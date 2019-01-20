@@ -24,14 +24,17 @@ my %OptionSpec = (
     'serve_static' => undef,
 );
 
+my @OptionNames;
 for my $key (keys %OptionSpec) {
     my ($name) = $key =~ /^(\w+)/;
+    push @OptionNames, $name;
     has $name => sub ($self) {
         $self->{$name} //= $self->config->{$name} // $OptionSpec{$key};
     };
 }
 
 sub options ($self) { keys %OptionSpec }
+sub option_names ($self) { @OptionNames }
 
 sub _build_logger ($self) {
     my @config = @{$self->config->{logger} // []};

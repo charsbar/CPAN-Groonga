@@ -4,12 +4,16 @@ use lib "$FindBin::Bin/lib";
 use Plack::Builder;
 use CPAN::Groonga;
 use CPAN::Groonga::Web;
-use Mojo::Util qw/getopt/;
 
 local $ENV{MOJO_REVERSE_PROXY} = 1;
 local $ENV{MOJO_HOME} = "$FindBin::Bin";
 
-CPAN::Groonga->instance;
+my %opts;
+for my $name (CPAN::Groonga->option_names) {
+    my $key = "CPAN_GROONGA_" . (uc $name);
+    $opts{$name} = $ENV{$key};
+}
+CPAN::Groonga->instance(%opts);
 
 my $app = CPAN::Groonga::Web->new;
 
