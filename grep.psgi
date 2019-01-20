@@ -11,7 +11,7 @@ local $ENV{MOJO_HOME} = "$FindBin::Bin";
 my %opts;
 for my $name (CPAN::Groonga->option_names) {
     my $key = "CPAN_GROONGA_" . (uc $name);
-    $opts{$name} = $ENV{$key};
+    $opts{$name} = $ENV{$key} if exists $ENV{$key};
 }
 CPAN::Groonga->instance(%opts);
 
