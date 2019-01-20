@@ -64,7 +64,7 @@ sub run ($self, @args) {
             return unless $file =~ /$Parse::Distname::SUFFRE$/;
             my $dist = parse_distname($file->path) or return;
             my $name = $dist->{name} or return;
-            my $id = $dist->{is_perl6} ? "Perl6/$name" : $name;
+            my $id = $dist->{perl6} ? "Perl6/$name" : $name;
             my $mtime = $file->mtime;
             if ($self->cache->{$id}) {
                 return if $self->cache->{$id} >= $mtime;

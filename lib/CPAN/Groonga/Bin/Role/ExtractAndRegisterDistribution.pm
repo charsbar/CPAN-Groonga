@@ -46,7 +46,7 @@ sub register_distribution ($self, $dir, $archive_file) {
     my $name      = $dist->{name} // return;
     my $subdir    = $dist->{subdir} // '';
     my $pause_id  = $dist->{pause_id};
-    my $is_perl6  = $dist->{is_perl6};
+    my $is_perl6  = $dist->{perl6};
     my $cpan_path = $dist->{cpan_path};
 
     $is_perl6 = 1 if -e $dir->file('META6.json');
