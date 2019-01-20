@@ -71,7 +71,7 @@ sub register_distribution ($self, $dir, $archive_file) {
     $dist_tags{$_} //= "10" for split /\-/, $name;
 
     $self->ua->load(distributions => [{
-        _key        => $name,
+        _key        => $id,
         cpan_path   => $cpan_path,
         author      => $pause_id,
         version     => $dist->{version} // '',
@@ -131,8 +131,8 @@ sub register_distribution ($self, $dir, $archive_file) {
         }
 
         push @files, {
-            _key => "$name/$file_path",
-            distribution => $name,
+            _key => "$id/$file_path",
+            distribution => $id,
             author       => $pause_id,
             mtime        => $file->mtime,
             extension    => $extension,
