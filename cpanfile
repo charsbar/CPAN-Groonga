@@ -13,6 +13,7 @@ requires 'MooX::Singleton';
 requires 'Parse::CPAN::Meta';
 requires 'Parse::CPAN::Whois';
 requires 'Parse::Distname' => '0.03';
+requires 'Parse::PMFile';
 requires 'Path::Extended::Tiny';
 requires 'Plack::Middleware::AxsLog';
 requires 'Plack::Middleware::ReverseProxy';
