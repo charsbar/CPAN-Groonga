@@ -5,9 +5,38 @@ use CPAN::Groonga::Client;
 use CPAN::Groonga;
 use Scalar::Util qw/looks_like_number/;
 use Data::Dump;
+use Parse::Distname qw/parse_distname/;
 
 plugin 'DefaultHelpers';
 plugin 'TagHelpers';
+
+helper 'external_link' => sub ($c, $cpan_path, $key = undef) {
+    return unless $cpan_path;
+    my $info = parse_distname($cpan_path);
+    if ($info->{perl6}) {
+        my $url = Mojo::URL->new('https://modules.perl6.org');
+        my $name = $info->{name};
+        $name =~ s|\-|::|g;
+        $name .= ":cpan:".$info->{pause_id};
+        if ($key) {
+            my ($file_path) = $key =~ m![^/]+/[^/]+/(.+)!;
+            $url->path("/dist/$name/$file_path");
+        } else {
+            $url->path("/dist/$name");
+        }
+        return ($url, 'modules.perl6.org');
+    } else {
+        my $release_id = join '/', @$info{qw/pause_id name_and_version/};
+        my $url = Mojo::URL->new('https://metacpan.org');
+        if ($key) {
+            my ($file_path) = $key =~ m![^/]+/(.+)!;
+            $url->path("/source/$release_id/$file_path");
+        } else {
+            $url->path("/release/$release_id");
+        }
+        return ($url, 'MetaCPAN');
+    }
+};
 
 app->secrets([rand]);
 
@@ -220,7 +249,14 @@ span.keyword { font-weight: bold; color: #f00 }
 %     if ($row->{_nsubrecs}) {
 %       # group by distribution
     <div class="tile-title">
-      <a href="<%= url_with->query({group_by => '', distribution => $row->{_key} }) %>"><%= $row->{author} %>/<%= $row->{_key} %>-<%= $row->{version} %></a> <small>(<%= $row->{time_format} %>; matches <%= $row->{_nsubrecs} %> files)</small>
+      <a href="<%= url_with->query({group_by => '', distribution => $row->{_key} }) %>"><%= $row->{author} %>/<%= $row->{_key} %>-<%= $row->{version} %></a>
+      <small>(
+        <%= $row->{time_format} %>;
+        matches <%= $row->{_nsubrecs} %> files;
+        % if (my ($service_url, $service_name) = external_link($row->{cpan_path})) {
+          <i class="icon icon-share"></i><a href="<%= $service_url %>"><%= $service_name %></a>
+        % }
+      )</small>
     </div>
     <div class="tile-subtitle">
       <%= $row->{abstract} %>
@@ -228,8 +264,21 @@ span.keyword { font-weight: bold; color: #f00 }
 %     } else {
 %   # file
     <div class="tile-title">
-      <a href="<%= url_with->query({distribution => $row->{distribution}, group_by => 'distribution'}) %>"><%= $row->{distribution} %></a> <small>(<%= $row->{"distribution.cpan_path"} %>, <%= $row->{author} %>, <%= $row->{time_format} %>)</small>
-      <div><small><%= $row->{_key} %> (<a href="<%= url_with->path("/source/$row->{_key}") %>">view source</a>)</small></div>
+      <a href="<%= url_with->query({distribution => $row->{distribution}, group_by => 'distribution'}) %>"><%= $row->{distribution} %></a>
+        <small>(
+          <%= $row->{"distribution.cpan_path"} %>, <%= $row->{author} %>, <%= $row->{time_format} %>;
+          % if (my ($service_url, $service_name) = external_link($row->{"distribution.cpan_path"})) {
+            <i class="icon icon-share"></i><a href="<%= $service_url %>"><%= $service_name %></a>
+          % }
+        )</small>
+      <div>
+        <small><%= $row->{_key} %> (
+          <a href="<%= url_with->path("/source/$row->{_key}") %>">view source</a>;
+          % if (my ($service_url, $service_name) = external_link($row->{"distribution.cpan_path"}, $row->{_key})) {
+            <i class="icon icon-share"></i><a href="<%= $service_url %>"><%= $service_name %></a>
+          % }
+        )</small>
+      </div>
     </div>
 %       my @snippets = @{ $row->{snippet_html} // [] };
 %       if (@snippets) {
