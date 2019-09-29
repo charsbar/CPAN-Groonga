@@ -12,7 +12,7 @@ requires 'Mojolicious' => '8.00';
 requires 'MooX::Singleton';
 requires 'Parse::CPAN::Meta';
 requires 'Parse::CPAN::Whois';
-requires 'Parse::Distname' => '0.03';
+requires 'Parse::Distname' => '0.05';
 requires 'Parse::PMFile';
 requires 'Path::Extended::Tiny';
 requires 'Plack::Middleware::AxsLog';
